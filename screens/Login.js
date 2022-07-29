@@ -1,5 +1,6 @@
 // import Components from react native
 import { SafeAreaView, Text, StyleSheet } from "react-native";
+import Navbar from "../components/Navbar";
 
 const styles = StyleSheet.create({
    container: {
@@ -7,10 +8,11 @@ const styles = StyleSheet.create({
    },
 });
 
-const Login = () => {
+const Login = ({ navigation }) => {
    return (
-      <SafeAreaView>
+      <SafeAreaView style={{ height: "100%"}}>
          <Text>The Login screen works just fine</Text>
+         <Navbar navigation={navigation} />
       </SafeAreaView>
    );
 };

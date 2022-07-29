@@ -1,11 +1,12 @@
-import { SafeAreaView } from "react-native";
+// import screen components
 import Home from "./screens/Home";
 import Settings from "./screens/Settings";
 import Login from "./screens/Login";
 import Profile from "./screens/Profile";
+import Matches from "./screens/Matches";
+
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import Matches from "./screens/Matches";
 
 const Stack = createNativeStackNavigator();
 

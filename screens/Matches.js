@@ -1,9 +1,11 @@
 import { SafeAreaView, Text } from "react-native";
+import Navbar from "../components/Navbar";
 
-const Matches = () => {
+const Matches = ({ navigation }) => {
    return (
-      <SafeAreaView>
+      <SafeAreaView style={{ height: "100%" }}>
          <Text>Matches page works just fine</Text>
+         <Navbar navigation={navigation} />
       </SafeAreaView>
    );
 };

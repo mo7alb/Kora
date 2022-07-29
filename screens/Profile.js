@@ -1,11 +1,13 @@
 // import components from react native
-import { View, Text } from "react-native";
+import { SafeAreaView, View, Text } from "react-native";
+import Navbar from "../components/Navbar";
 
-const Profile = () => {
+const Profile = ({ navigation }) => {
    return (
-      <View>
+      <SafeAreaView style={{ height: "100%" }}>
          <Text>The profile page works fine</Text>
-      </View>
+         <Navbar navigation={navigation} />
+      </SafeAreaView>
    );
 };
 
