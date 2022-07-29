@@ -1,5 +1,5 @@
 // import Components from react native
-import { View, Text, StyleSheet } from "react-native";
+import { SafeAreaView, Text, StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
    container: {
@@ -9,9 +9,9 @@ const styles = StyleSheet.create({
 
 const Login = () => {
    return (
-      <View>
+      <SafeAreaView>
          <Text>The Login screen works just fine</Text>
-      </View>
+      </SafeAreaView>
    );
 };
 
