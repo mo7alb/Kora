@@ -5,6 +5,7 @@ import Login from "./screens/Login";
 import Profile from "./screens/Profile";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import Matches from "./screens/Matches";
 
 const Stack = createNativeStackNavigator();
 
@@ -18,6 +19,16 @@ export default function App() {
                options={{ headerShown: false }}
             />
             <Stack.Screen
+               name="Matches"
+               component={Matches}
+               options={{ headerShown: false }}
+            />
+            <Stack.Screen
+               name="Profile"
+               component={Profile}
+               options={{ headerShown: false }}
+            />
+            <Stack.Screen
                name="Settings"
                component={Settings}
                options={{ headerShown: false }}
@@ -25,11 +36,6 @@ export default function App() {
             <Stack.Screen
                name="Login"
                component={Login}
-               options={{ headerShown: false }}
-            />
-            <Stack.Screen
-               name="Profile"
-               component={Profile}
                options={{ headerShown: false }}
             />
          </Stack.Navigator>

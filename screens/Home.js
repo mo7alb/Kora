@@ -42,6 +42,14 @@ const Home = ({ navigation }) => {
          >
             <Text>Go to Profile Screen</Text>
          </TouchableOpacity>
+         <TouchableOpacity
+            style={styles.btn}
+            onPress={() => {
+               navigation.navigate("Matches");
+            }}
+         >
+            <Text>Go to Matches Screen</Text>
+         </TouchableOpacity>
       </SafeAreaView>
    );
 };
