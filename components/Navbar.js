@@ -8,14 +8,13 @@ const styles = StyleSheet.create({
    // styles for the navbar area
    nav: {
       width: "100%",
-      height: "15%",
-      backgroundColor: "coral",
+      height: "8%",
       display: "flex",
       flexDirection: "row",
       justifyContent: "space-evenly",
       alignItems: "center",
       position: "absolute",
-      bottom: 1,
+      bottom: 0,
    },
    // styles for each button
    btn: {},
