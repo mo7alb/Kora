@@ -2,6 +2,7 @@
 import { memo, useCallback } from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
+import CustomButton from "./CustomButton";
 
 // styles for the component
 const styles = StyleSheet.create({
@@ -17,7 +18,9 @@ const styles = StyleSheet.create({
       bottom: 0,
    },
    // styles for each button
-   btn: {},
+   btn: {
+      width: "25%",
+   },
    // styles for the content of the button
    btnContent: {
       alignItems: "center",

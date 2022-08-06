@@ -7,6 +7,8 @@ import {
    TouchableOpacity,
 } from "react-native";
 import Navbar from "../components/Navbar";
+// import custom components
+import CustomButton from "../components/CustomButton";
 
 const styles = StyleSheet.create({
    container: {
@@ -49,23 +51,6 @@ const styles = StyleSheet.create({
    motto: {
       fontSize: 30,
    },
-   btn: {
-      paddingHorizontal: 45,
-      paddingVertical: 20,
-      borderRadius: 25,
-      marginBottom: 2,
-   },
-   btnBlue: {
-      backgroundColor: "#6989F8",
-   },
-   btnBlack: {
-      backgroundColor: "#646467",
-      color: "#FFF",
-   },
-   btnContent: {
-      textAlign: "center",
-      fontSize: 15,
-   },
 });
 
 const Login = ({ navigation }) => {
@@ -80,17 +65,22 @@ const Login = ({ navigation }) => {
                <Text style={styles.motto}>Football at one Go.</Text>
             </View>
             <View style={styles.signUpContainer}>
-               <TouchableOpacity
-                  style={[styles.btn, styles.btnBlue]}
-                  onPress={() => console.log("trying to log in with Google")}
-               >
-                  <Text style={styles.btnContent}>Login with Google</Text>
-               </TouchableOpacity>
-               <TouchableOpacity
-                  style={[styles.btn, styles.btnBlack]}
-                  onPress={() => console.log("trying to log in with GitHub")}
-               >
-                  <Text style={styles.btnContent}>Login with GitHub</Text>
+               <CustomButton
+                  content="Login with Google"
+                  size="lg"
+                  style="blue"
+                  pressEvent={() => console.log("trying to log in with Google")}
+                  additionalStyles={{ marginBottom: 3 }}
+               />
+               <CustomButton
+                  content="Login with GitHub"
+                  pressEvent={() => console.log("trying to log in with GitHub")}
+                  size="lg"
+                  style="grey"
+               />
+
+               <TouchableOpacity style={[styles.btn, styles.btnBlack]}>
+                  <Text style={styles.btnContent}></Text>
                </TouchableOpacity>
             </View>
 
