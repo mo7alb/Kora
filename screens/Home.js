@@ -7,6 +7,7 @@ import {
    TouchableOpacity,
 } from "react-native";
 import Navbar from "../components/Navbar";
+import Match from "../components/Match";
 
 const styles = StyleSheet.create({
    container: {
@@ -50,14 +51,6 @@ const Home = ({ navigation }) => {
                }}
             >
                <Text>Go to Profile Screen</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-               style={styles.btn}
-               onPress={() => {
-                  navigation.navigate("Matches");
-               }}
-            >
-               <Text>Go to Matches Screen</Text>
             </TouchableOpacity>
          </View>
          <Navbar navigation={navigation} />

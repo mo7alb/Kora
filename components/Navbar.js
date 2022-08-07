@@ -2,7 +2,6 @@
 import { memo, useCallback } from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
-import CustomButton from "./CustomButton";
 
 // styles for the component
 const styles = StyleSheet.create({
