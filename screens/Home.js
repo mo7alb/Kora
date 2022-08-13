@@ -6,7 +6,7 @@ import {
    StyleSheet,
    TouchableOpacity,
 } from "react-native";
-import Navbar from "../components/Navbar";
+
 import Match from "../components/Match";
 
 const styles = StyleSheet.create({
@@ -53,7 +53,6 @@ const Home = ({ navigation }) => {
                <Text>Go to Profile Screen</Text>
             </TouchableOpacity>
          </View>
-         <Navbar navigation={navigation} />
       </SafeAreaView>
    );
 };

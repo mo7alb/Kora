@@ -6,7 +6,6 @@ import {
    StyleSheet,
    TouchableOpacity,
 } from "react-native";
-import Navbar from "../components/Navbar";
 // import custom components
 import CustomButton from "../components/CustomButton";
 
@@ -83,8 +82,6 @@ const Login = ({ navigation }) => {
                   <Text style={styles.btnContent}></Text>
                </TouchableOpacity>
             </View>
-
-            <Navbar navigation={navigation} />
          </View>
       </SafeAreaView>
    );
