@@ -3,7 +3,7 @@ import Team from "./Team";
 
 const styles = StyleSheet.create({
    container: {
-      widht: "100%",
+      width: "100%",
       padding: 15,
       display: "flex",
       flexDirection: "row",
@@ -24,15 +24,16 @@ const styles = StyleSheet.create({
    team2: {},
 });
 
-const Match = () => {
+const Match = ({ match }) => {
+   console.log(match)
    return (
       <View style={styles.container}>
          <View style={styles.teamsData}>
             <View style={styles.team1}>
-               <Team teamName="Manchester City" score={3} />
+               <Team teamName={ match?.homeTeam.team } score={ match?.homeTeam.score } />
             </View>
             <View style={styles.team2}>
-               <Team teamName="Liverpool" score={0} />
+               <Team teamName={ match?.awayTeam.team } score={ match?.awayTeam.score } />
             </View>
          </View>
          <View style={styles.timeDetails}>
