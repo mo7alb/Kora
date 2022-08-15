@@ -13,16 +13,16 @@ const styles = StyleSheet.create({
    // styles for a large button
    btnLg: {
       width: "85%",
-      paddingVertical: 19,
+      paddingVertical: 10,
       borderRadius: 32,
    },
-   btnLgContent: { fontSize: 21 },
+   btnLgContent: { fontSize: 17 },
    // styles for medium button
    btnMd: {
       width: "65%",
-      paddingVertical: 20,
+      paddingVertical: 6,
    },
-   btnMdContent: { fontSize: 17 },
+   btnMdContent: { fontSize: 14 },
    // styles for small button
    btnSm: {
       width: "37%",
