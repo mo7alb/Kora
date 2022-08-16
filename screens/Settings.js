@@ -2,6 +2,7 @@
 import {View, Text, StyleSheet, SafeAreaView, Switch, TextInput} from "react-native";
 import { TableView, Section, Cell } from "react-native-tableview-simple";
 import CustomButton from "../components/CustomButton";
+import { useDarkThemeContext } from "../context/themeContext";
 
 const styles = StyleSheet.create({
    container: {
@@ -23,6 +24,7 @@ const styles = StyleSheet.create({
 });
 
 const Settings = ({ navigation }) => {
+   const { darkTheme, setDarkTheme } = useDarkThemeContext();
    return (
       <SafeAreaView style={styles.container}>
          <Text>Logo to be displayed here</Text>
@@ -32,7 +34,7 @@ const Settings = ({ navigation }) => {
                   cellContentView={
                      <View style={styles.tableCell}>
                         <Text>Dark Theme</Text>
-                        <Switch />
+                        <Switch onValueChange={setDarkTheme} value={darkTheme}/>
                      </View>
                   }
                />
