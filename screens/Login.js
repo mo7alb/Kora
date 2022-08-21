@@ -8,6 +8,7 @@ import {
 } from "react-native";
 // import custom components
 import CustomButton from "../components/CustomButton";
+import LoginForm from "../components/LoginForm";
 
 const styles = StyleSheet.create({
    container: {
@@ -64,23 +65,7 @@ const Login = ({ navigation }) => {
                <Text style={styles.motto}>Football at one Go.</Text>
             </View>
             <View style={styles.signUpContainer}>
-               <CustomButton
-                  content="Login with Google"
-                  size="lg"
-                  style="blue"
-                  pressEvent={() => console.log("trying to log in with Google")}
-                  additionalStyles={{ marginBottom: 3 }}
-               />
-               <CustomButton
-                  content="Login with GitHub"
-                  pressEvent={() => console.log("trying to log in with GitHub")}
-                  size="lg"
-                  style="grey"
-               />
-
-               <TouchableOpacity style={[styles.btn, styles.btnBlack]}>
-                  <Text style={styles.btnContent}></Text>
-               </TouchableOpacity>
+               <LoginForm />
             </View>
          </View>
       </SafeAreaView>
