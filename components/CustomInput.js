@@ -1,4 +1,5 @@
 import { View, Text, StyleSheet, TextInput } from "react-native";
+import { memo } from "react";
 
 const CustomInput = ({ label, secure = false, value, textChangeEvent }) => (
    <View style={styles.wrapper}>
@@ -12,7 +13,7 @@ const CustomInput = ({ label, secure = false, value, textChangeEvent }) => (
    </View>
 );
 
-export default CustomInput;
+export default memo(CustomInput);
 
 const styles = StyleSheet.create({
    wrapper: {

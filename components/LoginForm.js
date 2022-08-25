@@ -5,34 +5,38 @@ import CustomButton from "./CustomButton";
 import CustomInput from "./CustomInput";
 // import hooks
 import { useCallback, useState } from "react";
+import useForm from "../hooks/useForm";
 
 export default function LoginForm() {
-   const [username, changeUsername] = useState("");
-   const [password, changePassword] = useState("");
+   const [state, updateState, restFormData] = useForm({
+      username: "",
+      password: "",
+   });
 
    const handleLogin = useCallback(() => {
-      console.log(username, password);
-      // make request to api
-
-      changeUsername("");
-      changePassword("");
       console.log("login");
-   }, [username, password]);
+      console.log("login state ===> ", state);
+      restFormData();
+   }, [state]);
 
    return (
       <View style={styles.container}>
          <CustomInput
             label="Username"
-            textChangeEvent={useCallback(text => {
-               changeUsername(text);
-            }, [])}
+            value={state.username}
+            textChangeEvent={useCallback(
+               text => updateState("username", text),
+               []
+            )}
          />
          <CustomInput
             label="Password"
             secure={true}
-            textChangeEvent={useCallback(text => {
-               changePassword(text);
-            }, [])}
+            value={state.password}
+            textChangeEvent={useCallback(
+               text => updateState("password", text),
+               []
+            )}
          />
          <CustomButton
             content="Login"

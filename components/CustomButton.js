@@ -1,4 +1,5 @@
 import { TouchableOpacity, Text, StyleSheet } from "react-native";
+import React from "react";
 
 const styles = StyleSheet.create({
    btn: {
@@ -132,4 +133,4 @@ const CustomButton = ({
    );
 };
 
-export default CustomButton;
+export default React.memo(CustomButton);
