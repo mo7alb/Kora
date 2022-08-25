@@ -5,13 +5,14 @@ import RegistrationForm from "../components/RegistrationForm";
 
 const Register = ({ navigation }) => {
    return (
-      <SafeAreaView>
-         <View style={styles.header}>
-            <Text style={styles.welcomeText}>Welcome to Kora</Text>
-            <Text style={styles.title}>Register</Text>
+      <SafeAreaView style={styles.container}>
+         <View style={styles.welcomeTextContainer}>
+            <Text style={styles.styledText}>Welcome to</Text>
+            <Text style={styles.appName}>Kora</Text>
+            <Text style={styles.styledText}>Football at one Go.</Text>
          </View>
          <View style={styles.registrationContainer}>
-            <RegistrationForm />
+            <RegistrationForm navigation={navigation} />
             <View style={styles.loginContainer}>
                <Text style={styles.loginText}>Already have an account</Text>
                <CustomButton
@@ -36,21 +37,20 @@ const styles = StyleSheet.create({
       width: "100%",
       height: "100%",
    },
-   header: {
-      height: "30%",
+   welcomeTextContainer: {
+      height: "45%",
       display: "flex",
-      justifyContent: "space-between",
+      justifyContent: "space-evenly",
+      paddingLeft: 25,
    },
-   welcomeText: {
-      fontSize: 26,
-      textAlign: "center",
-      fontWeight: "900",
-      marginTop: 15,
-   },
-   title: {
-      fontSize: 20,
-      textAlign: "center",
+   styledText: {
+      fontSize: 28,
       fontWeight: "700",
+      color: "grey",
+   },
+   appName: {
+      fontSize: 35,
+      fontWeight: "900",
    },
    registrationContainer: {
       maxHeight: "50%",

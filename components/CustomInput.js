@@ -1,12 +1,21 @@
 import { View, Text, StyleSheet, TextInput } from "react-native";
 import { memo } from "react";
 
-const CustomInput = ({ label, secure = false, value, textChangeEvent }) => (
+const CustomInput = ({
+   label,
+   secure = false,
+   autoCap = "none",
+   autoCorrect = false,
+   value,
+   textChangeEvent,
+}) => (
    <View style={styles.wrapper}>
       <Text style={styles.lable}>{label}</Text>
       <TextInput
          style={styles.input}
          secureTextEntry={secure}
+         autoCapitalize={autoCap}
+         autoCorrect={autoCorrect}
          value={value}
          onChangeText={textChangeEvent}
       />

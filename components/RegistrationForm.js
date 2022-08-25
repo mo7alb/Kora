@@ -1,27 +1,60 @@
-import { StyleSheet, Text, View } from "react-native";
-import { useCallback, useState } from "react";
+import { StyleSheet, View, Text } from "react-native";
+import { useCallback } from "react";
 import useForm from "../hooks/useForm";
 
 import CustomButton from "./CustomButton";
 import CustomInput from "./CustomInput";
 
-const RegistrationForm = () => {
+import axios from "axios";
+
+const RegistrationForm = ({ navigation }) => {
    const [state, updateState, resetFormData] = useForm({
       name: "",
       username: "",
       email: "",
       password: "",
+      error: "",
    });
 
-   const handleRegistration = useCallback(() => {
-      console.log("registering");
-      console.log("registeration data ===> ", state);
+   const handleRegistration = useCallback(async () => {
+      if (state.name.length < 3) {
+         updateState("error", "Name is too short");
+         return;
+      } else if (state.username.length < 3) {
+         updateState("error", "Username is too short");
+         return;
+      } else if (state.email.length < 5) {
+         updateState("error", "Email is too short");
+         return;
+      }
 
-      resetFormData();
+      let api_url = "http://localhost:3000/api/auth/register";
+
+      try {
+         let respones = await axios.post(api_url, state);
+         resetFormData();
+         if (respones.status == 201) {
+            navigation.navigate("Login");
+         }
+      } catch (error) {
+         if (error.request.status === 400) {
+            updateState("error", "Username or email already exists");
+         } else {
+            updateState("error", "Unable to reach server");
+         }
+      }
    }, [state]);
 
    return (
       <View style={styles.container}>
+         {state.error !== "" ? (
+            <>
+               <Text style={styles.errorTxt}>Error</Text>
+               <Text style={styles.errorTxt}>{state.error}</Text>
+            </>
+         ) : (
+            <></>
+         )}
          {/* Input field for name */}
          <CustomInput
             label="Name"
@@ -75,5 +108,9 @@ const styles = StyleSheet.create({
    },
    btnExt: {
       marginVertical: 10,
+   },
+   errorTxt: {
+      color: "red",
+      fontWeight: "bold",
    },
 });
