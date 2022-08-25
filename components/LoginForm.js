@@ -1,3 +1,5 @@
+import { StyleSheet, View } from "react-native";
+
 // import custom components
 import CustomButton from "./CustomButton";
 import CustomInput from "./CustomInput";
@@ -8,17 +10,10 @@ export default function LoginForm() {
    const [username, changeUsername] = useState("");
    const [password, changePassword] = useState("");
 
-   const usernameChangeEvent = useCallback(text => {
-      changeUsername(text);
-   }, []);
-
-   const passwordChangeEvent = useCallback(text => {
-      changePassword(text);
-   }, []);
-
    const handleLogin = useCallback(() => {
       console.log(username, password);
       // make request to api
+
       changeUsername("");
       changePassword("");
       console.log("login");
@@ -26,24 +21,37 @@ export default function LoginForm() {
 
    return (
       <View style={styles.container}>
-         <CustomInput label="Username" textChangeEvent={usernameChangeEvent} />
+         <CustomInput
+            label="Username"
+            textChangeEvent={useCallback(text => {
+               changeUsername(text);
+            }, [])}
+         />
          <CustomInput
             label="Password"
             secure={true}
-            textChangeEvent={passwordChangeEvent}
+            textChangeEvent={useCallback(text => {
+               changePassword(text);
+            }, [])}
          />
-         <CustomButton label="Login" pressEvent={handleLogin} />
+         <CustomButton
+            content="Login"
+            pressEvent={handleLogin}
+            size="lg"
+            style="dark"
+            additionalStyles={styles.btnEtc}
+         />
       </View>
    );
 }
 
 const styles = StyleSheet.create({
    container: {
-      flex: 1,
       justifyContent: "center",
       alignItems: "center",
-      paddingTop: Constants.statusBarHeight,
-      backgroundColor: "#ecf0f1",
-      padding: 8,
+      backfaceVisibility: "visible",
+   },
+   btnEtc: {
+      marginVertical: 17,
    },
 });

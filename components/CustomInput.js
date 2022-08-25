@@ -19,6 +19,7 @@ const styles = StyleSheet.create({
       display: "flex",
       flexDirection: "row",
       width: "90%",
+      alignItems: "center",
    },
    lable: {
       fontSize: 16,
