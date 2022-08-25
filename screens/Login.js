@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
       paddingBottom: 15,
    },
    registerText: {
-      fontSize: 18,
+      fontSize: 16,
       marginBottom: 10,
    },
 });
