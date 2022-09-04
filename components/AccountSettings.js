@@ -24,7 +24,7 @@ export const AccountSettings = ({ navigation }) => {
    const deleteAccount = useCallback(async () => {
       const url = "http://localhost:3000/api/auth/";
       const token = await SecureStore.getItemAsync("token");
-      
+
       let res = await axios.delete(url, {
          headers: {
             authorization: `token ${token}`,
@@ -51,16 +51,16 @@ export const AccountSettings = ({ navigation }) => {
             <View style={[styles.tableCell, { flexDirection: "column" }]}>
                <CustomButton
                   size="lg"
-                  style="coral"
+                  style="dark"
                   content="Logout"
-                  additionalStyles={{ padding: 0, margin: 0 }}
+                  additionalStyles={{ padding: 0, marginTop: 10 }}
                   pressEvent={logout}
                />
                <CustomButton
                   size="lg"
-                  style="coral"
+                  style="dark"
                   content="Delete account"
-                  additionalStyles={{ padding: 0, margin: 0 }}
+                  additionalStyles={{ padding: 0, marginVertical: 10 }}
                   pressEvent={deleteAccount}
                />
             </View>

@@ -11,7 +11,9 @@ const NotAuthenticated = ({ navigateToLogin }) => (
    <View style={styles.container}>
       <Text style={styles.welcomeText}>Welcome to Kora</Text>
       <Text style={styles.moto}>Football in one go</Text>
-      <Text>Log in to keep track of your favorite matches</Text>
+      <Text>
+         Log in to keep track of your favorite teams, matches and leagues
+      </Text>
       <CustomButton
          style="dark"
          size="md"

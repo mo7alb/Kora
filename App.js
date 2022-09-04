@@ -23,7 +23,7 @@ import { LeaguesProvider } from "./context/LeaguesContext";
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
-const IndexStackScreens = () => (
+const IndexTabScreens = () => (
    <Tab.Navigator
       screenOptions={({ route }) => ({
          tabBarIcon: ({ focused, color, size }) => {
@@ -69,23 +69,27 @@ const IndexStackScreens = () => (
    </Tab.Navigator>
 );
 
+const AppNavigationStack = () => (
+   <NavigationContainer>
+      <Stack.Navigator>
+         <Stack.Screen
+            name="Index"
+            component={IndexTabScreens}
+            options={{ headerShown: false }}
+         />
+         <Stack.Screen name="Login" component={Login} />
+         <Stack.Screen name="Register" component={Register} />
+      </Stack.Navigator>
+   </NavigationContainer>
+);
+
 export default function App() {
    return (
       <ThemeProvider>
          <ProfileProvider>
             <LeaguesProvider>
                <FavoriteMatchesProvider>
-                  <NavigationContainer>
-                     <Stack.Navigator>
-                        <Stack.Screen
-                           name="Index"
-                           component={IndexStackScreens}
-                           options={{ headerShown: false }}
-                        />
-                        <Stack.Screen name="Login" component={Login} />
-                        <Stack.Screen name="Register" component={Register} />
-                     </Stack.Navigator>
-                  </NavigationContainer>
+                  <AppNavigationStack />
                </FavoriteMatchesProvider>
             </LeaguesProvider>
          </ProfileProvider>

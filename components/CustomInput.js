@@ -1,6 +1,9 @@
 import { View, Text, StyleSheet, TextInput } from "react-native";
 import { memo } from "react";
 
+/**
+ * A functional component represent a custom text input
+ */
 const CustomInput = ({
    label,
    secure = false,

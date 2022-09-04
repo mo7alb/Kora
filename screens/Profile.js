@@ -1,14 +1,14 @@
-// import components from react native
-import { SafeAreaView, View, Text, StyleSheet } from "react-native";
+import { useEffect, useState, useCallback } from "react";
+import { SafeAreaView, View, Text, StyleSheet, Alert } from "react-native";
+import { useProfileContext } from "../context/profileContext";
 import Logo from "../components/Logo";
 import Constants from "expo-constants";
-import { useEffect, useState } from "react";
 import axios from "axios";
 import * as SecureStore from "expo-secure-store";
+import NotAuthenticated from "../components/NotAuthenticated";
 
 const makeRequest = async (url, setter) => {
    const token = await SecureStore.getItemAsync("token");
-   console.log(token);
    try {
       let response = await axios.get(url, {
          headers: {
@@ -18,13 +18,21 @@ const makeRequest = async (url, setter) => {
 
       setter(response.data);
    } catch (error) {
-      console.log(error);
+      Alert.alert("An error occured, try again later");
    }
 };
 
+/** functional component to display user profile */
 const Profile = ({ navigation }) => {
    const [leagues, setLeagues] = useState(null);
    const [teams, setTeams] = useState(null);
+
+   const { profile } = useProfileContext();
+
+   const navigateToLogin = useCallback(
+      () => navigation.navigate("Login"),
+      [navigation]
+   );
 
    useEffect(() => {
       const leagues_url = "http://localhost:3000/api/leagues/favorite-leagues";
@@ -37,16 +45,21 @@ const Profile = ({ navigation }) => {
    return (
       <SafeAreaView style={styles.wrapper}>
          <Logo />
-         <View style={styles.componentWrapper}>
-            <View style={styles.section}>
-               <Text>Favorite Leagues</Text>
-               <Text>{JSON.stringify(leagues)}</Text>
+         {profile != null && (
+            <View style={styles.componentWrapper}>
+               <View style={styles.section}>
+                  <Text>Favorite Leagues</Text>
+                  <Text>{JSON.stringify(leagues)}</Text>
+               </View>
+               <View style={styles.section}>
+                  <Text>Favorite Teams</Text>
+                  <Text>{JSON.stringify(teams)}</Text>
+               </View>
             </View>
-            <View style={styles.section}>
-               <Text>Favorite Teams</Text>
-               <Text>{JSON.stringify(teams)}</Text>
-            </View>
-         </View>
+         )}
+         {profile == null && (
+            <NotAuthenticated navigateToLogin={navigateToLogin} />
+         )}
       </SafeAreaView>
    );
 };

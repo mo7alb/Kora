@@ -21,7 +21,6 @@ const League = ({ league }) => {
             setMatches(response.data);
          })
          .catch(error => {
-            console.log(error.response.data);
             Alert.alert("An error occurred, try again later");
          });
    }, []);

@@ -3,9 +3,11 @@ import { useEffect, useState } from "react";
 import { SafeAreaView, StyleSheet, Text } from "react-native";
 import { Section, TableView } from "react-native-tableview-simple";
 import { AccountSettings } from "../components/AccountSettings";
+import Logo from "../components/Logo";
 import { PasswordSettings } from "../components/PasswordSettings";
 import { ThemeSettings } from "../components/ThemeSettings";
 import { useProfileContext } from "../context/profileContext";
+import Constants from "expo-constants";
 
 const Settings = ({ navigation }) => {
    const { profile } = useProfileContext();
@@ -17,7 +19,7 @@ const Settings = ({ navigation }) => {
 
    return (
       <SafeAreaView style={styles.container}>
-         <Text>Logo to be displayed here</Text>
+         <Logo />
          <TableView>
             <Section header="Theme settings">
                <ThemeSettings />
@@ -41,7 +43,8 @@ export default Settings;
 
 export const styles = StyleSheet.create({
    container: {
-      flex: 1,
       height: "100%",
+      width: "100%",
+      marginTop: Constants.statusBarHeight + 15,
    },
 });
