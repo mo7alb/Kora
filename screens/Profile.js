@@ -1,80 +1,52 @@
 // import components from react native
-import { SafeAreaView, View, Text, StyleSheet, Image } from "react-native";
+import { SafeAreaView, View, Text, StyleSheet } from "react-native";
+import Logo from "../components/Logo";
+import Constants from "expo-constants";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import * as SecureStore from "expo-secure-store";
 
-const LogoWrapper = ({ children }) => {
-   return <View style={styles.logoWrapper}>{children}</View>;
-};
+const makeRequest = async (url, setter) => {
+   const token = await SecureStore.getItemAsync("token");
+   console.log(token);
+   try {
+      let response = await axios.get(url, {
+         headers: {
+            authorization: `token ${token}`,
+         },
+      });
 
-const DisplayLogo = ({ logoURI, title }) => {
-   return (
-      <View style={styles.logoContainer}>
-         <Image source={logoURI} style={styles.logoImage} />
-         <Text style={styles.title}>{title}</Text>
-      </View>
-   );
-};
-
-const FavoriteTeams = () => {
-   return (
-      <View style={styles.favoriteTeams}>
-         <Text style={styles.title}>Favorite teams</Text>
-         <LogoWrapper>
-            <DisplayLogo
-               logoURI={require("../assets/man-city-logo.jpeg")}
-               title="Manchester city"
-            />
-            <DisplayLogo
-               logoURI={require("../assets/man-city-logo.jpeg")}
-               title="Manchester city"
-            />
-            <DisplayLogo
-               logoURI={require("../assets/man-city-logo.jpeg")}
-               title="Manchester city"
-            />
-            <DisplayLogo
-               logoURI={require("../assets/man-city-logo.jpeg")}
-               title="Manchester city"
-            />
-         </LogoWrapper>
-      </View>
-   );
-};
-
-const FavoriteLeagues = () => {
-   return (
-      <View style={styles.favoriteTeams}>
-         <Text style={styles.title}>Favorite Leagues</Text>
-         <LogoWrapper>
-            <DisplayLogo
-               logoURI={require("../assets/man-city-logo.jpeg")}
-               title="Manchester city"
-            />
-            <DisplayLogo
-               logoURI={require("../assets/man-city-logo.jpeg")}
-               title="Manchester city"
-            />
-            <DisplayLogo
-               logoURI={require("../assets/man-city-logo.jpeg")}
-               title="Manchester city"
-            />
-            <DisplayLogo
-               logoURI={require("../assets/man-city-logo.jpeg")}
-               title="Manchester city"
-            />
-         </LogoWrapper>
-      </View>
-   );
+      setter(response.data);
+   } catch (error) {
+      console.log(error);
+   }
 };
 
 const Profile = ({ navigation }) => {
+   const [leagues, setLeagues] = useState(null);
+   const [teams, setTeams] = useState(null);
+
+   useEffect(() => {
+      const leagues_url = "http://localhost:3000/api/leagues/favorite-leagues";
+      makeRequest(leagues_url, setLeagues);
+
+      const teams_url = "http://localhost:3000/api/teams/favorite-teams";
+      makeRequest(teams_url, setTeams);
+   }, []);
+
    return (
       <SafeAreaView style={styles.wrapper}>
-         <Text>Logo goes here</Text>
-         {/*  Logo to be placed here  */}
-         {/*  favorite teams to be placed here  */}
-         <FavoriteTeams />
-         {/*  favorite leagues to be placed here  */}
-         <FavoriteLeagues />
+         <Logo />
+         <View style={styles.componentWrapper}>
+            <View style={styles.section}>
+               <Text>Favorite Leagues</Text>
+               <Text>{JSON.stringify(leagues)}</Text>
+            </View>
+            <View style={styles.section}>
+               <Text>Favorite Teams</Text>
+               <Text>{JSON.stringify(teams)}</Text>
+            </View>
+         </View>
       </SafeAreaView>
    );
 };
@@ -84,31 +56,19 @@ export default Profile;
 const styles = StyleSheet.create({
    wrapper: {
       height: "100%",
-      flex: 1,
-      margin: 10,
+      width: "100%",
+      marginTop: Constants.statusBarHeight + 15,
    },
-   favoriteTeams: {
+   componentWrapper: {
+      height: "80%",
+      width: "100%",
+      backgroundColor: "white",
+      display: "flex",
       justifyContent: "center",
       alignItems: "center",
    },
-   title: {
-      fontSize: 15,
-      textAlign: "center",
-   },
-   logoWrapper: {
-      display: "flex",
-      flexDirection: "row",
-      flexWrap: "wrap",
+   section: {
+      height: "50%",
       width: "100%",
-      justifyContent: "flex-start",
-      alignItems: "center",
-      height: "60%",
-   },
-   logoContainer: {
-      width: "32%",
-   },
-   logoImage: {
-      width: "90%",
-      height: "29%",
    },
 });

@@ -29,7 +29,8 @@ export default function LoginForm({ navigation }) {
          .post(api_url, data)
          .then(async response => {
             if (response.status == 200) {
-               await SecureStore.setItemAsync("token", data.token);
+               console.log(response);
+               await SecureStore.setItemAsync("token", response.data.token);
                setProfile(response.data.user);
                navigation.navigate("Home");
             }
