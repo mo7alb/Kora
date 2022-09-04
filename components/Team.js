@@ -1,3 +1,5 @@
+import axios from "axios";
+import { useEffect, useState } from "react";
 import { View, Text, StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
@@ -17,28 +19,29 @@ const styles = StyleSheet.create({
       justifyContent: "flex-end",
       alignItems: "flex-end",
    },
-   teamLogo: {
-      width: 30,
-      height: 30,
-      borderRadius: 5,
-      backgroundColor: "#444",
-      marginRight: 10,
-      marginLeft: -10,
-   },
 });
 
-const Team = ({ teamName, score }) => {
+const Team = ({ teamId, score }) => {
+   const [team, setTeam] = useState(null);
+
+   useEffect(() => {
+      if (team != null) return;
+
+      const url = `http://localhost:3000/api/teams/${teamId}`;
+      axios
+         .get(url)
+         .then(response => {
+            setTeam(response.data);
+         })
+         .catch(error => console.error(error));
+   }, []);
+
    return (
       <View style={styles.teamContainer}>
          <View style={styles.teamIdentifier}>
-            <View style={styles.teamLogo} />
-            <Text>{teamName}</Text>
+            <Text>{team && team.title}</Text>
          </View>
-         {score != undefined ? (
-            <Text style={styles.teamScore}>{score}</Text>
-         ) : (
-            <></>
-         )}
+         {score && <Text style={styles.teamScore}>{score}</Text>}
       </View>
    );
 };

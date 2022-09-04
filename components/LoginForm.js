@@ -1,7 +1,6 @@
 import { Alert, StyleSheet, View } from "react-native";
 import { useCallback, useState } from "react";
 import { useProfileContext } from "../context/profileContext";
-import { useToken } from "../hooks/useToken";
 import CustomButton from "./CustomButton";
 import CustomInput from "./CustomInput";
 import axios from "axios";
@@ -30,8 +29,7 @@ export default function LoginForm({ navigation }) {
          .post(api_url, data)
          .then(async response => {
             if (response.status == 200) {
-               const { setToken } = useToke();
-               setToken(response.data.token);
+               await SecureStore.setItemAsync("token", data.token);
                setProfile(response.data.user);
                navigation.navigate("Home");
             }

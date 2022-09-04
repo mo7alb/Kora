@@ -1,52 +1,55 @@
 import { Text, View, StyleSheet } from "react-native";
 import Team from "./Team";
 
-const styles = StyleSheet.create({
-   container: {
-      width: "100%",
-      padding: 15,
-      display: "flex",
-      flexDirection: "row",
-      backgroundColor: "#fff",
-   },
-   teamsData: {
-      width: "60%",
-      borderRightWidth: 2,
-      paddingRight: 15,
-   },
-   timeDetails: {
-      width: "40%",
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center",
-   },
-   team1: {},
-   team2: {},
-});
-
 const Match = ({ match }) => {
-   console.log(match);
+   let date = new Date(match.date);
+   let fullTime = date.toDateString() < new Date().toDateString();
+
+   date = date.toLocaleDateString("en-US", {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+   });
+
    return (
       <View style={styles.container}>
          <View style={styles.teamsData}>
-            <View style={styles.team1}>
-               <Team
-                  teamName={match.homeTeam.team}
-                  score={match.homeTeam?.score}
-               />
-            </View>
-            <View style={styles.team2}>
-               <Team
-                  teamName={match.awayTeam.team}
-                  score={match.awayTeam?.score}
-               />
-            </View>
+            <Team teamId={match.homeTeam.team} score={match.homeTeam?.score} />
+            <Team teamId={match.awayTeam.team} score={match.awayTeam?.score} />
          </View>
          <View style={styles.timeDetails}>
-            <Text></Text>
+            <Text style={styles.timeData}>
+               {fullTime == false ? date : "Full time"}
+            </Text>
+            <Text>{match.venue}</Text>
          </View>
       </View>
    );
 };
 
 export default Match;
+
+const styles = StyleSheet.create({
+   container: {
+      width: "100%",
+      display: "flex",
+      flexDirection: "row",
+      backgroundColor: "#fff",
+   },
+   teamsData: {
+      width: "50%",
+      borderRightWidth: 2,
+      paddingTop: 5,
+   },
+   timeDetails: {
+      width: "40%",
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      paddingLeft: 12,
+   },
+   timeData: {
+      textAlign: "center",
+      padding: 10,
+   },
+});

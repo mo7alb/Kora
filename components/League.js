@@ -5,20 +5,6 @@ import Match from "./Match";
 import axios from "axios";
 
 /**
- * Function to display a single match
- */
-// const Match = ({ match }) => (
-//    <Cell
-//       cellContentView={
-//          <View>
-//             <Text>Home team</Text>
-//             <Text>Away team</Text>
-//          </View>
-//       }
-//    />
-// );
-
-/**
  * Functional component for display a league and its matches
  */
 const League = ({ league }) => {
@@ -32,7 +18,6 @@ const League = ({ league }) => {
       axios
          .get(url)
          .then(response => {
-            console.log(response.data);
             setMatches(response.data);
          })
          .catch(error => {
@@ -43,7 +28,6 @@ const League = ({ league }) => {
 
    return (
       <Section header={league.title}>
-         <Text>this is a league</Text>
          {matches &&
             matches.map(match => (
                <Cell
