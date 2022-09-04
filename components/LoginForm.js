@@ -1,22 +1,43 @@
-import { StyleSheet, View } from "react-native";
-
-// import custom components
+import { Alert, StyleSheet, View } from "react-native";
+import { useCallback, useState } from "react";
+import { useProfileContext } from "../context/profileContext";
 import CustomButton from "./CustomButton";
 import CustomInput from "./CustomInput";
-// import hooks
-import { useCallback, useState } from "react";
-import useForm from "../hooks/useForm";
+import axios from "axios";
+import * as SecureStore from "expo-secure-store";
 
-export default function LoginForm() {
-   const [state, updateState, restFormData] = useForm({
+export default function LoginForm({ navigation }) {
+   const { setProfile } = useProfileContext();
+
+   const [state, setState] = useState({
       username: "",
       password: "",
    });
 
-   const handleLogin = useCallback(() => {
-      console.log("login");
-      console.log("login state ===> ", state);
-      restFormData();
+   const handleLogin = useCallback(async () => {
+      let api_url = "http://localhost:3000/api/auth/login";
+
+      if (state.username == "") {
+         Alert.alert("Username is required");
+         return;
+      } else if (state.password == "") {
+         Alert.alert("Password is required");
+         return;
+      }
+
+      try {
+         let response = await axios.post(api_url, {
+            username: state.username,
+            password: state.password,
+         });
+         let data = await response.data;
+         await SecureStore.setItemAsync("token", data.token);
+         setProfile(data.user);
+         console.log(await SecureStore.getItemAsync("token"));
+         navigation.navigate("Home");
+      } catch (error) {
+         Alert.alert("Error", error);
+      }
    }, [state]);
 
    return (
@@ -25,7 +46,7 @@ export default function LoginForm() {
             label="Username"
             value={state.username}
             textChangeEvent={useCallback(
-               text => updateState("username", text),
+               text => setState(prev => ({ ...prev, username: text })),
                []
             )}
          />
@@ -34,7 +55,7 @@ export default function LoginForm() {
             secure={true}
             value={state.password}
             textChangeEvent={useCallback(
-               text => updateState("password", text),
+               text => setState(prev => ({ ...prev, password: text })),
                []
             )}
          />

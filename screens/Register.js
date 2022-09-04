@@ -1,4 +1,10 @@
-import { StyleSheet, Text, View, SafeAreaView } from "react-native";
+import {
+   StyleSheet,
+   Text,
+   View,
+   SafeAreaView,
+   KeyboardAvoidingView,
+} from "react-native";
 import { useCallback } from "react";
 import CustomButton from "../components/CustomButton";
 import RegistrationForm from "../components/RegistrationForm";
@@ -6,25 +12,27 @@ import RegistrationForm from "../components/RegistrationForm";
 const Register = ({ navigation }) => {
    return (
       <SafeAreaView style={styles.container}>
-         <View style={styles.welcomeTextContainer}>
-            <Text style={styles.styledText}>Welcome to</Text>
-            <Text style={styles.appName}>Kora</Text>
-            <Text style={styles.styledText}>Football at one Go.</Text>
-         </View>
-         <View style={styles.registrationContainer}>
-            <RegistrationForm navigation={navigation} />
-            <View style={styles.loginContainer}>
-               <Text style={styles.loginText}>Already have an account</Text>
-               <CustomButton
-                  content="Login"
-                  size="lg"
-                  style="dark"
-                  pressEvent={useCallback(() => {
-                     navigation.navigate("Login");
-                  }, [])}
-               />
+         <KeyboardAvoidingView>
+            <View style={styles.welcomeTextContainer}>
+               <Text style={styles.styledText}>Welcome to</Text>
+               <Text style={styles.appName}>Kora</Text>
+               <Text style={styles.styledText}>Football at one Go.</Text>
             </View>
-         </View>
+            <View style={styles.registrationContainer}>
+               <RegistrationForm navigation={navigation} />
+               <View style={styles.loginContainer}>
+                  <Text style={styles.loginText}>Already have an account</Text>
+                  <CustomButton
+                     content="Login"
+                     size="lg"
+                     style="dark"
+                     pressEvent={useCallback(() => {
+                        navigation.navigate("Login");
+                     }, [])}
+                  />
+               </View>
+            </View>
+         </KeyboardAvoidingView>
       </SafeAreaView>
    );
 };
