@@ -1,7 +1,7 @@
-import { Text, View, StyleSheet } from "react-native";
+import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
 import Team from "./Team";
 
-const Match = ({ match }) => {
+const Match = ({ match, navigation }) => {
    let date = new Date(match.date);
    let fullTime = date.toDateString() < new Date().toDateString();
 
@@ -12,18 +12,30 @@ const Match = ({ match }) => {
    });
 
    return (
-      <View style={styles.container}>
-         <View style={styles.teamsData}>
-            <Team teamId={match.homeTeam.team} score={match.homeTeam?.score} />
-            <Team teamId={match.awayTeam.team} score={match.awayTeam?.score} />
+      <TouchableOpacity
+         onPress={() =>
+            navigation.navigate("MatchDetails", { match_id: match._id })
+         }
+      >
+         <View style={styles.container}>
+            <View style={styles.teamsData}>
+               <Team
+                  teamId={match.homeTeam.team}
+                  score={match.homeTeam?.score}
+               />
+               <Team
+                  teamId={match.awayTeam.team}
+                  score={match.awayTeam?.score}
+               />
+            </View>
+            <View style={styles.timeDetails}>
+               <Text style={styles.timeData}>
+                  {fullTime == false ? date : "Full time"}
+               </Text>
+               <Text>{match.venue}</Text>
+            </View>
          </View>
-         <View style={styles.timeDetails}>
-            <Text style={styles.timeData}>
-               {fullTime == false ? date : "Full time"}
-            </Text>
-            <Text>{match.venue}</Text>
-         </View>
-      </View>
+      </TouchableOpacity>
    );
 };
 

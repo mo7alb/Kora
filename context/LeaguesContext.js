@@ -38,8 +38,22 @@ function LeaguesProvider({ children }) {
       });
    }, [leagues]);
 
+   // get a league by id
+   const getLeague = useCallback(
+      id => {
+         // return nothing if the leagues have been fetched already
+         if (leagues == null) return;
+
+         const res = leagues.find(league => league._id == id);
+         return res;
+      },
+      [leagues]
+   );
+
    return (
-      <LeaguesContext.Provider value={{ leagues, error, fetchLeagues }}>
+      <LeaguesContext.Provider
+         value={{ leagues, error, fetchLeagues, getLeague }}
+      >
          {children}
       </LeaguesContext.Provider>
    );

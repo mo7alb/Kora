@@ -9,7 +9,7 @@ import Constants from "expo-constants";
 /**
  * Screen to display a list of leagues and their matches
  */
-const Matches = () => {
+const Matches = ({ navigation }) => {
    const { leagues, error, fetchLeagues } = useLeaguesContext();
 
    useEffect(() => fetchLeagues(), []);
@@ -25,7 +25,11 @@ const Matches = () => {
                   <ScrollView style={styles.scrollViewStyles}>
                      <TableView>
                         {leagues.map(league => (
-                           <League key={league._id} league={league} />
+                           <League
+                              key={league._id}
+                              league={league}
+                              navigation={navigation}
+                           />
                         ))}
                      </TableView>
                   </ScrollView>
