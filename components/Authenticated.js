@@ -4,22 +4,6 @@ import { useFavoriteMatchContext } from "../context/favoriteMatchesContext";
 import { useProfileContext } from "../context/profileContext";
 
 /**
- * expected favorite match 
- * 
- * homeTeam: {
- *    team: id
- *    score?: int
- * }
- * away {
- *    team: id
- *    score?: int
- * }
- * venue: str
- * date: Date
- * 
- */
-
-/**
  * sceen to be shown at Home sceen when user is logged in
  */
 const Authenticated = () => {

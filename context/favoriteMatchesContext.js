@@ -22,7 +22,7 @@ function FavoriteMatchesProvider({ children }) {
 
       // fetch the token
       getToken().then(token => {
-         // make a fetch request to the backend api
+         // make a get request to the backend api
          axios
             .get(api_url, {
                headers: {
