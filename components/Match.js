@@ -25,20 +25,25 @@ const styles = StyleSheet.create({
 });
 
 const Match = ({ match }) => {
-   console.log(match)
+   console.log(match);
    return (
       <View style={styles.container}>
          <View style={styles.teamsData}>
             <View style={styles.team1}>
-               <Team teamName={ match?.homeTeam.team } score={ match?.homeTeam.score } />
+               <Team
+                  teamName={match.homeTeam.team}
+                  score={match.homeTeam?.score}
+               />
             </View>
             <View style={styles.team2}>
-               <Team teamName={ match?.awayTeam.team } score={ match?.awayTeam.score } />
+               <Team
+                  teamName={match.awayTeam.team}
+                  score={match.awayTeam?.score}
+               />
             </View>
          </View>
          <View style={styles.timeDetails}>
-            <Text>Full time</Text>
-            <Text>Half time</Text>
+            <Text></Text>
          </View>
       </View>
    );

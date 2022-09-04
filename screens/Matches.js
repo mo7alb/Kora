@@ -1,16 +1,34 @@
-import { SafeAreaView, Text } from "react-native";
-import MatchesList from "../components/MatchesList";
-import { MatchesProvider } from "../context/matchesContext";
+import { StyleSheet, Text, View, SafeAreaView } from "react-native";
 
-const Matches = ({ navigation }) => {
+import Logo from "../components/Logo";
+import Constants from "expo-constants";
+
+const Matches = () => {
    return (
-      <MatchesProvider>
-         <SafeAreaView style={{ height: "100%" }}>
+      <SafeAreaView style={styles.container}>
+         <Logo />
+
+         <View style={styles.componentContainer}>
             <Text>Matches page works just fine</Text>
-            {/* <MatchesList /> */}
-         </SafeAreaView>
-      </MatchesProvider>
+         </View>
+      </SafeAreaView>
    );
 };
 
 export default Matches;
+
+const styles = StyleSheet.create({
+   container: {
+      height: "100%",
+      width: "100%",
+      marginTop: Constants.statusBarHeight + 15,
+   },
+   componentContainer: {
+      height: "80%",
+      width: "100%",
+      backgroundColor: "white",
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+   },
+});

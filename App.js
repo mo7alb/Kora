@@ -17,6 +17,7 @@ import Icon from "react-native-vector-icons/Ionicons";
 // import context provider
 import { ThemeProvider } from "./context/themeContext";
 import { ProfileProvider } from "./context/profileContext";
+import { FavoriteMatchesProvider } from "./context/favoriteMatchesContext";
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -71,17 +72,19 @@ export default function App() {
    return (
       <ThemeProvider>
          <ProfileProvider>
-            <NavigationContainer>
-               <Stack.Navigator>
-                  <Stack.Screen
-                     name="Index"
-                     component={IndexStackScreens}
-                     options={{ headerShown: false }}
-                  />
-                  <Stack.Screen name="Login" component={Login} />
-                  <Stack.Screen name="Register" component={Register} />
-               </Stack.Navigator>
-            </NavigationContainer>
+            <FavoriteMatchesProvider>
+               <NavigationContainer>
+                  <Stack.Navigator>
+                     <Stack.Screen
+                        name="Index"
+                        component={IndexStackScreens}
+                        options={{ headerShown: false }}
+                     />
+                     <Stack.Screen name="Login" component={Login} />
+                     <Stack.Screen name="Register" component={Register} />
+                  </Stack.Navigator>
+               </NavigationContainer>
+            </FavoriteMatchesProvider>
          </ProfileProvider>
       </ThemeProvider>
    );
