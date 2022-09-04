@@ -17,9 +17,13 @@ import Icon from "react-native-vector-icons/Ionicons";
 
 // import context provider
 import { ThemeProvider } from "./context/themeContext";
-import { ProfileProvider } from "./context/profileContext";
+import { ProfileProvider, useProfileContext } from "./context/profileContext";
 import { FavoriteMatchesProvider } from "./context/favoriteMatchesContext";
 import { LeaguesProvider } from "./context/LeaguesContext";
+
+import { useEffect } from "react";
+import * as SecureStore from "expo-secure-store";
+import axios from "axios";
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -70,20 +74,40 @@ const IndexTabScreens = () => (
    </Tab.Navigator>
 );
 
-const AppNavigationStack = () => (
-   <NavigationContainer>
-      <Stack.Navigator>
-         <Stack.Screen
-            name="Index"
-            component={IndexTabScreens}
-            options={{ headerShown: false }}
-         />
-         <Stack.Screen name="Login" component={Login} />
-         <Stack.Screen name="Register" component={Register} />
-         <Stack.Screen name="MatchDetails" component={MatchDetails} />
-      </Stack.Navigator>
-   </NavigationContainer>
-);
+const AppNavigationStack = () => {
+   const { setProfile } = useProfileContext();
+   useEffect(() => {
+      const getToken = async () => {
+         let token = await SecureStore.getItemAsync("token");
+         if (token != undefined) {
+            axios
+               .get("http:localhost:3000/api/auth", {
+                  headers: {
+                     authorization: `token ${token}`,
+                  },
+               })
+               .then(response => setProfile(response.data));
+         }
+      };
+
+      getToken();
+   }, []);
+
+   return (
+      <NavigationContainer>
+         <Stack.Navigator>
+            <Stack.Screen
+               name="Index"
+               component={IndexTabScreens}
+               options={{ headerShown: false }}
+            />
+            <Stack.Screen name="Login" component={Login} />
+            <Stack.Screen name="Register" component={Register} />
+            <Stack.Screen name="MatchDetails" component={MatchDetails} />
+         </Stack.Navigator>
+      </NavigationContainer>
+   );
+};
 
 export default function App() {
    return (
