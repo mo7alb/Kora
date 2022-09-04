@@ -1,82 +1,35 @@
 // import Components from react native
-import {
-   SafeAreaView,
-   ScrollView,
-   View,
-   Text,
-   Button,
-   StyleSheet,
-} from "react-native";
-import { useState, useCallback, useEffect } from "react";
+import { SafeAreaView, StyleSheet } from "react-native";
 import { useProfileContext } from "../context/profileContext";
-import MatchesList from "../components/MatchesList";
+import Logo from "../components/Logo";
+import Constants from "expo-constants";
+import Authenticated from "../components/Authenticated";
+import NotAuthenticated from "../components/NotAuthenticated";
+import { useCallback } from "react";
 
-const styles = StyleSheet.create({
+export const styles = StyleSheet.create({
    container: {
       height: "100%",
-      flex: 1,
-   },
-   homeMatches: {
-      backgroundColor: "red",
-      justifyContent: "center",
-      alignItems: "center",
+      width: "100%",
+      marginTop: Constants.statusBarHeight + 15,
    },
 });
 
-const HomeMatches = () => {
-   const [matches, setMatches] = useState([]);
-
-   return (
-      <SafeAreaView style={{ width: "100%" }}>
-         <View style={styles.homeMatches}>
-            <Text>Hey I am Logged in, give me some matches</Text>
-            {matches != [] && <MatchesList matches={matches} />}
-         </View>
-      </SafeAreaView>
-   );
-};
-
-const NotAuthenticated = ({ navigation }) => {
-   return (
-      <View>
-         <Text>Hey I am not logged in, convince me to log in</Text>
-         <Button
-            title="Login"
-            onPress={useCallback(() => navigation.navigate("Login"), [])}
-         />
-      </View>
-   );
-};
-
 const Home = ({ navigation }) => {
-   const [auth, setAuth] = useState(null);
    const { profile } = useProfileContext();
-   const authenticate = useCallback(
-      () =>
-         setAuth(prev => {
-            if (prev === null) return true;
-            else if (prev === true) return null;
-         }),
-      []
+
+   const navigateToLogin = useCallback(
+      () => navigation.navigate("Login"),
+      [navigation]
    );
 
    return (
       <SafeAreaView style={styles.container}>
-         <ScrollView>
-            <View>
-               <Text>The home screen works just fine</Text>
-               <Button title="Authenticate" onPress={authenticate} />
-               {profile !== null && (
-                  <>
-                     <Text>{JSON.stringify(profile)}</Text>
-                  </>
-               )}
-               {/* All favorite matches to be displayed here */}
-               {/* if not logged in, encourage user to log in  */}
-               {auth != null && <HomeMatches />}
-               {auth == null && <NotAuthenticated navigation={navigation} />}
-            </View>
-         </ScrollView>
+         <Logo />
+         {profile != null && <Authenticated />}
+         {profile == null && (
+            <NotAuthenticated navigateToLogin={navigateToLogin} />
+         )}
       </SafeAreaView>
    );
 };

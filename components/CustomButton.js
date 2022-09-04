@@ -14,14 +14,14 @@ const styles = StyleSheet.create({
    // styles for a large button
    btnLg: {
       width: "85%",
-      paddingVertical: 10,
+      paddingVertical: 12,
       borderRadius: 32,
    },
    btnLgContent: { fontSize: 17 },
    // styles for medium button
    btnMd: {
       width: "65%",
-      paddingVertical: 6,
+      paddingVertical: 8,
    },
    btnMdContent: { fontSize: 14 },
    // styles for small button
@@ -35,7 +35,8 @@ const styles = StyleSheet.create({
       backgroundColor: "#3F4040",
    },
    btnDarkContent: {
-      color: "#C5C5C6",
+      color: "#C4C4C4",
+      fontSize: 16,
    },
    // styles for light button
    btnLight: {

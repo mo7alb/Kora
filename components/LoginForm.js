@@ -16,7 +16,6 @@ export default function LoginForm({ navigation }) {
 
    const handleLogin = useCallback(async () => {
       let api_url = "http://localhost:3000/api/auth/login";
-
       if (state.username == "") {
          Alert.alert("Username is required");
          return;
@@ -25,20 +24,22 @@ export default function LoginForm({ navigation }) {
          return;
       }
 
-      try {
-         let response = await axios.post(api_url, {
-            username: state.username,
-            password: state.password,
+      const data = { username: state.username, password: state.password };
+      axios
+         .post(api_url, data)
+         .then(async response => {
+            if (response.status == 200) {
+               await SecureStore.setItemAsync("token", response.data.token);
+               setProfile(response.data.user);
+               navigation.navigate("Home");
+            }
+         })
+         .catch(error => {
+            if (error.message == "Request failed with status code 400") {
+               Alert.alert("Invalid credentials");
+               return;
+            }
          });
-         console.log(response);
-         let data = await response.data;
-         await SecureStore.setItemAsync("token", data.token);
-         setProfile(data.user);
-         console.log(await SecureStore.getItemAsync("token"));
-         navigation.navigate("Home");
-      } catch (error) {
-         Alert.alert("Error", error);
-      }
    }, [state]);
 
    return (
