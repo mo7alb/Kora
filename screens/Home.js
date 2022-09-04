@@ -26,9 +26,6 @@ const styles = StyleSheet.create({
 const HomeMatches = () => {
    const [matches, setMatches] = useState([]);
 
-   const { profile } = useProfileContext();
-   useEffect(() => {}, []);
-
    return (
       <SafeAreaView style={{ width: "100%" }}>
          <View style={styles.homeMatches}>
@@ -53,7 +50,7 @@ const NotAuthenticated = ({ navigation }) => {
 
 const Home = ({ navigation }) => {
    const [auth, setAuth] = useState(null);
-
+   const { profile } = useProfileContext();
    const authenticate = useCallback(
       () =>
          setAuth(prev => {
@@ -69,6 +66,11 @@ const Home = ({ navigation }) => {
             <View>
                <Text>The home screen works just fine</Text>
                <Button title="Authenticate" onPress={authenticate} />
+               {profile !== null && (
+                  <>
+                     <Text>{JSON.stringify(profile)}</Text>
+                  </>
+               )}
                {/* All favorite matches to be displayed here */}
                {/* if not logged in, encourage user to log in  */}
                {auth != null && <HomeMatches />}

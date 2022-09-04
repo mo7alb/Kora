@@ -1,82 +1,47 @@
 // import Components from react native
-import {View, Text, StyleSheet, SafeAreaView, Switch, TextInput} from "react-native";
-import { TableView, Section, Cell } from "react-native-tableview-simple";
-import CustomButton from "../components/CustomButton";
-import { useDarkThemeContext } from "../context/themeContext";
-
-const styles = StyleSheet.create({
-   container: {
-      flex: 1,
-      height: "100%",
-   },
-   settingsTable: {
-      marginVertical: 10
-   },
-   tableCell: {
-      display: "flex",
-      flexDirection: "row",
-      flexWrap: "nowrap",
-      width: "100%",
-      alignItems: "center",
-      justifyContent: "space-between",
-   },
-
-});
+import { useEffect, useState } from "react";
+import { SafeAreaView, StyleSheet, Text } from "react-native";
+import { Section, TableView } from "react-native-tableview-simple";
+import { AccountSettings } from "../components/AccountSettings";
+import { PasswordSettings } from "../components/PasswordSettings";
+import { ThemeSettings } from "../components/ThemeSettings";
+import { useProfileContext } from "../context/profileContext";
 
 const Settings = ({ navigation }) => {
-   const { darkTheme, setDarkTheme } = useDarkThemeContext();
+   const { profile } = useProfileContext();
+   const [userProfile, setUserProfile] = useState(profile);
+
+   useEffect(() => {
+      setUserProfile(profile);
+   }, [profile]);
+
    return (
       <SafeAreaView style={styles.container}>
          <Text>Logo to be displayed here</Text>
          <TableView>
             <Section header="Theme settings">
-               <Cell
-                  cellContentView={
-                     <View style={styles.tableCell}>
-                        <Text>Dark Theme</Text>
-                        <Switch onValueChange={setDarkTheme} value={darkTheme}/>
-                     </View>
-                  }
-               />
+               <ThemeSettings />
             </Section>
-            <Section header="Password settings">
-               <Cell
-                  cellContentView={
-                     <View style={[styles.tableCell, { flexWrap: "wrap"}]}>
-                        <Text>Old password</Text>
-                        <TextInput secureTextEntry/>
-                        <Text>New password</Text>
-                        <TextInput secureTextEntry/>
-                        <Text>Confirm password</Text>
-                        <TextInput secureTextEntry/>
-                        <CustomButton style="grey" content="Change Password" size="md"/>
-                     </View>
-                  }
-               />
-            </Section>
-            <Section header="Account settings">
-               <Cell
-                   cellContentView={
-                      <View style={[styles.tableCell, { flexDirection: "column"} ]}>
-                         <CustomButton
-                             size="lg"
-                             style="coral"
-                             content="Logout"
-                             additionalStyles={{ padding: 0, margin: 0 }}
-                         />
-                         <CustomButton
-                             size="lg"
-                             style="coral"
-                             content="Delete account"
-                             additionalStyles={{ padding: 0, margin: 0 }}
-                         />
-                      </View>
-                   }
-               />
-            </Section>
+            {userProfile != null && (
+               <>
+                  <Section header="Password settings">
+                     <PasswordSettings />
+                  </Section>
+                  <Section header="Account settings">
+                     <AccountSettings navigation={navigation} />
+                  </Section>
+               </>
+            )}
          </TableView>
       </SafeAreaView>
    );
 };
 
 export default Settings;
+
+export const styles = StyleSheet.create({
+   container: {
+      flex: 1,
+      height: "100%",
+   },
+});

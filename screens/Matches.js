@@ -7,7 +7,7 @@ const Matches = ({ navigation }) => {
       <MatchesProvider>
          <SafeAreaView style={{ height: "100%" }}>
             <Text>Matches page works just fine</Text>
-            <MatchesList />
+            {/* <MatchesList /> */}
          </SafeAreaView>
       </MatchesProvider>
    );

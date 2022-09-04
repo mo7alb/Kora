@@ -30,6 +30,7 @@ export default function LoginForm({ navigation }) {
             username: state.username,
             password: state.password,
          });
+         console.log(response);
          let data = await response.data;
          await SecureStore.setItemAsync("token", data.token);
          setProfile(data.user);
