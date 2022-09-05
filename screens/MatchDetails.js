@@ -4,8 +4,9 @@ import {
    View,
    SafeAreaView,
    ActivityIndicator,
+   TouchableOpacity,
 } from "react-native";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import axios from "axios";
 import { useLeaguesContext } from "../context/LeaguesContext";
 
@@ -23,6 +24,7 @@ const makeRequest = (url, setter, loadingSetter) => {
 /** functional component that represents a screen with the match details */
 const MatchDetails = ({ route, navigation }) => {
    const { match_id } = route.params;
+
    const [match, setMatch] = useState(null);
    const [homeTeam, setHomeTeam] = useState(null);
    const [awayTeam, setAwayTeam] = useState(null);
@@ -56,22 +58,39 @@ const MatchDetails = ({ route, navigation }) => {
             <View style={styles.wrapper}>
                <View style={styles.row}>
                   <View style={styles.col}>
-                     <Text style={styles.teamTitles}>
-                        {homeTeam && homeTeam.title}
-                     </Text>
+                     <TouchableOpacity
+                        style={styles.clickable}
+                        onPress={() => {
+                           navigation.navigate("TeamDetails", {
+                              team: homeTeam,
+                           });
+                        }}
+                     >
+                        <Text style={styles.teamTitles}>
+                           {homeTeam && homeTeam.title}
+                        </Text>
+                     </TouchableOpacity>
                   </View>
                   <View style={styles.col}>
-                     <Text style={styles.matchDate}>
-                        {match && new Date(match.date).toDateString()}
-                     </Text>
-                  </View>
-                  <View style={styles.col}>
-                     <Text style={styles.teamTitles}>
-                        {awayTeam && awayTeam.title}
-                     </Text>
+                     <TouchableOpacity
+                        style={styles.clickable}
+                        onPress={() => {
+                           navigation.navigate("TeamDetails", {
+                              team: awayTeam,
+                           });
+                        }}
+                     >
+                        <Text style={styles.teamTitles}>
+                           {awayTeam && awayTeam.title}
+                        </Text>
+                     </TouchableOpacity>
                   </View>
                </View>
 
+               <Text style={styles.indicators}>Time</Text>
+               <Text style={styles.indicators}>
+                  {match && new Date(match.date).toDateString()}
+               </Text>
                <Text style={styles.indicators}>Competition</Text>
                <Text style={styles.indicators}>{league && league.title}</Text>
                <Text style={styles.indicators}>Stadium</Text>
@@ -101,12 +120,12 @@ const styles = StyleSheet.create({
       justifyContent: "space-evenly",
       alignItems: "center",
       marginBottom: 35,
+      borderBottomWidth: 1,
    },
    col: {
-      width: "33%",
+      width: "50%",
       paddingHorizontal: 10,
       paddingVertical: 20,
-      borderBottomWidth: 1,
    },
    teamTitles: {
       textAlign: "center",
@@ -121,6 +140,11 @@ const styles = StyleSheet.create({
       textAlign: "center",
       fontSize: 17,
       marginVertical: 15,
-      fontWeight: "600"
+      fontWeight: "600",
+   },
+   clickable: {
+      borderWidth: 1,
+      borderRadius: 10,
+      paddingVertical: 15,
    },
 });
