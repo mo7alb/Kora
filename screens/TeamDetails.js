@@ -53,6 +53,7 @@ const TeamDetails = ({ route, navigation }) => {
                         <TouchablePlayer
                            key={player._id}
                            player={player}
+                           team={team.title}
                            navigation={navigation}
                         />
                      ))}

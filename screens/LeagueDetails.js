@@ -1,9 +1,19 @@
-import { StyleSheet, Text, View, SafeAreaView, ScrollView } from "react-native";
+import {
+   StyleSheet,
+   Text,
+   View,
+   SafeAreaView,
+   ScrollView,
+   Alert,
+} from "react-native";
 import { useLeaguesContext } from "../context/LeaguesContext";
 import { useState, useEffect } from "react";
 import TeamsList from "../components/TeamsList";
+import CustomButton from "../components/CustomButton";
+import * as SecureStore from "expo-secure-store";
 import axios from "axios";
 
+/** functional Component to display league details */
 const LeagueDetails = ({ route, navigation }) => {
    const { league_id } = route.params;
 
@@ -19,6 +29,27 @@ const LeagueDetails = ({ route, navigation }) => {
          .catch(error => console.error(error));
    }, []);
 
+   const addFavoriteLeague = async () => {
+      const url = `http://localhost:3000/api/leagues/add-favorite-league`;
+      const token = await SecureStore.getItemAsync("token");
+      let data = { league_id: league_id };
+
+      axios
+         .post(url, data, {
+            headers: { authorization: `token ${token}` },
+         })
+         .then(response => Alert.alert("Started following the League"))
+         //Alert.alert("An error occurred")
+         .catch(error => {
+            if (error.message == "Request failed with status code 400") {
+               Alert.alert("Already following league");
+               return;
+            }
+
+            Alert.alert("An error occurred, Try again later");
+         });
+   };
+
    return (
       <SafeAreaView style={styles.container}>
          <ScrollView>
@@ -28,7 +59,24 @@ const LeagueDetails = ({ route, navigation }) => {
             <Text style={styles.details}>
                Country - {league != null && league.country}
             </Text>
-            {teams != null && <TeamsList teams={teams} />}
+            <View style={styles.btnContainer}>
+               <CustomButton
+                  style="dark"
+                  size="lg"
+                  content={`Follow ${
+                     (league != null && league.title) || "league"
+                  }`}
+                  additionalStyles={styles.btn}
+                  pressEvent={addFavoriteLeague}
+               />
+            </View>
+            {teams != null && (
+               <TeamsList
+                  key={league_id}
+                  teams={teams}
+                  navigation={navigation}
+               />
+            )}
          </ScrollView>
       </SafeAreaView>
    );
@@ -51,5 +99,13 @@ const styles = StyleSheet.create({
       fontSize: 18,
       marginBottom: 10,
       textAlign: "center",
+   },
+   btnContainer: {
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+   },
+   btn: {
+      marginVertical: 25,
    },
 });
