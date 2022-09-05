@@ -11,10 +11,7 @@ const PlayerDetails = ({ route, navigation }) => {
       const url = `http://localhost:3000/api/players/${player._id}`;
       axios
          .get(url)
-         .then(response => {
-            console.log(response.data);
-            setPlayerDetails(response.data);
-         })
+         .then(response => setPlayerDetails(response.data))
          .catch(error => {
             console.error(error);
          });

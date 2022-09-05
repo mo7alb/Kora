@@ -42,13 +42,13 @@ const MatchDetails = ({ route, navigation }) => {
 
    useEffect(() => {
       if (match == null || homeTeam != null || awayTeam != null) return;
-      console.log(match.league);
+
       const homeTeamURL = `http://localhost:3000/api/teams/${match.homeTeam.team}`;
       makeRequest(homeTeamURL, setHomeTeam, setLoading);
       const awayTeamURL = `http://localhost:3000/api/teams/${match.awayTeam.team}`;
       makeRequest(awayTeamURL, setAwayTeam, setLoading);
+
       let league = getLeague(match.league);
-      console.log(league);
       setLeague(league);
    }, [match]);
 

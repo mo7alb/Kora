@@ -27,7 +27,7 @@ import { LeaguesProvider } from "./context/LeaguesContext";
 import { useEffect, useState } from "react";
 import { View, Text } from "react-native";
 import * as SecureStore from "expo-secure-store";
-import * as Network from "expo-network";
+import NetInfo from "@react-native-community/netinfo";
 import axios from "axios";
 
 const Tab = createBottomTabNavigator();

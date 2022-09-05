@@ -52,7 +52,7 @@ const Profile = ({ navigation }) => {
       setChanges(false);
    }, [changes]);
 
-   const removeFavoriteTeam = async team_id => {
+   const removeFavoriteTeam = useCallback(async team_id => {
       const url = `http://localhost:3000/api/teams/remove-favorite-team`;
       const token = await SecureStore.getItemAsync("token");
 
@@ -69,7 +69,7 @@ const Profile = ({ navigation }) => {
             Alert.alert("Removed favorite team");
          })
          .catch(error => Alert.alert("An error occurred, Try again later"));
-   };
+   }, []);
 
    return (
       <SafeAreaView style={styles.wrapper}>

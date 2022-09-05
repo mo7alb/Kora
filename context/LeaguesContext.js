@@ -38,17 +38,13 @@ function LeaguesProvider({ children }) {
             .then(response => {
                setLeagues(response.data);
             })
-            .catch(error => {
-               console.log(error);
-               setError(error);
-            });
+            .catch(error => setError(error));
       });
    }, [leagues]);
 
    // get a league by id
    const getLeague = useCallback(
       id => {
-         console.log(leagues);
          // return nothing if the leagues have been fetched already
          if (leagues == null) return;
 

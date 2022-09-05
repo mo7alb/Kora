@@ -5,7 +5,6 @@ import { Section, TableView } from "react-native-tableview-simple";
 import { AccountSettings } from "../components/AccountSettings";
 import Logo from "../components/Logo";
 import { PasswordSettings } from "../components/PasswordSettings";
-import { ThemeSettings } from "../components/ThemeSettings";
 import { useProfileContext } from "../context/profileContext";
 import Constants from "expo-constants";
 
@@ -20,21 +19,19 @@ const Settings = ({ navigation }) => {
    return (
       <SafeAreaView style={styles.container}>
          <Logo />
-         <TableView>
-            <Section header="Theme settings">
-               <ThemeSettings />
-            </Section>
-            {userProfile != null && (
-               <>
-                  <Section header="Password settings">
-                     <PasswordSettings />
-                  </Section>
-                  <Section header="Account settings">
-                     <AccountSettings navigation={navigation} />
-                  </Section>
-               </>
-            )}
-         </TableView>
+         {userProfile == null && (
+            <Text style={{ textAlign: "center" }}>Login to view settings</Text>
+         )}
+         {userProfile != null && (
+            <TableView>
+               <Section header="Password settings">
+                  <PasswordSettings />
+               </Section>
+               <Section header="Account settings">
+                  <AccountSettings navigation={navigation} />
+               </Section>
+            </TableView>
+         )}
       </SafeAreaView>
    );
 };

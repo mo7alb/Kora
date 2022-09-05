@@ -12,8 +12,6 @@ import Constants from "expo-constants";
 const Matches = ({ navigation }) => {
    const { leagues, error, fetchLeagues } = useLeaguesContext();
 
-   useEffect(() => fetchLeagues(), []);
-
    return (
       <SafeAreaView style={styles.container}>
          <Logo />
