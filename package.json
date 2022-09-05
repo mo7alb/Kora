@@ -23,7 +23,8 @@
     "react-native-vector-icons": "^9.2.0",
     "react-native-web": "0.17.7",
     "expo-secure-store": "~11.2.0",
-    "expo-constants": "~13.1.1"
+    "expo-constants": "~13.1.1",
+    "@react-native-community/netinfo": "8.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",

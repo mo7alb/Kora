@@ -24,8 +24,10 @@ import { ProfileProvider, useProfileContext } from "./context/profileContext";
 import { FavoriteMatchesProvider } from "./context/favoriteMatchesContext";
 import { LeaguesProvider } from "./context/LeaguesContext";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { View, Text } from "react-native";
 import * as SecureStore from "expo-secure-store";
+import * as Network from "expo-network";
 import axios from "axios";
 
 const Tab = createBottomTabNavigator();
@@ -116,6 +118,29 @@ const AppNavigationStack = () => {
 };
 
 export default function App() {
+   const [connected, setConnected] = useState(false);
+   useEffect(() => {
+      const unsubscribe = NetInfo.addEventListener(state => {
+         if (connected != state.isConnected) setConnected(state.isConnected);
+      });
+      return () => {
+         unsubscribe();
+      };
+   }, []);
+   if (!connected) {
+      return (
+         <View
+            style={{
+               display: "flex",
+               justifyContent: "center",
+               alignItems: "center",
+            }}
+         >
+            <Text>Connection error, Check your internet connection</Text>
+         </View>
+      );
+   }
+
    return (
       <ThemeProvider>
          <ProfileProvider>
@@ -128,3 +153,16 @@ export default function App() {
       </ThemeProvider>
    );
 }
+
+const hasConnection = () => {
+   return new Promise(async (resolve, reject) => {
+      try {
+         let networkStat = await Network.getNetworkStateAsync();
+         if (networkStat.isInternetReachable) resolve(true);
+
+         resolve(true);
+      } catch (error) {
+         reject(error);
+      }
+   });
+};
