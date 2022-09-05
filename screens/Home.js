@@ -26,7 +26,7 @@ const Home = ({ navigation }) => {
    return (
       <SafeAreaView style={styles.container}>
          <Logo />
-         {profile != null && <Authenticated />}
+         {profile != null && <Authenticated navigation={navigation} />}
          {profile == null && (
             <NotAuthenticated navigateToLogin={navigateToLogin} />
          )}

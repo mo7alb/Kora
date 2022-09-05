@@ -1,4 +1,10 @@
-import { createContext, useContext, useState, useCallback } from "react";
+import {
+   createContext,
+   useContext,
+   useState,
+   useCallback,
+   useEffect,
+} from "react";
 import axios from "axios";
 import * as SecureStore from "expo-secure-store";
 
@@ -15,8 +21,8 @@ function FavoriteMatchesProvider({ children }) {
    const [matches, setMatches] = useState(null);
    const [error, setError] = useState(null);
 
-   // fetch list of favorite matches
-   const fetchFavoriteMatches = useCallback(() => {
+   // fetch data everytime components gets mounted
+   useEffect(() => {
       // return nothing if the matches have been fetched already
       if (matches != null) return;
 
@@ -36,12 +42,10 @@ function FavoriteMatchesProvider({ children }) {
                setError(error);
             });
       });
-   }, [matches]);
+   }, []);
 
    return (
-      <favoriteMatchesContext.Provider
-         value={{ matches, error, fetchFavoriteMatches }}
-      >
+      <favoriteMatchesContext.Provider value={{ matches, error }}>
          {children}
       </favoriteMatchesContext.Provider>
    );

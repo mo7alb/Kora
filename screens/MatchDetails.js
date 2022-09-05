@@ -42,13 +42,14 @@ const MatchDetails = ({ route, navigation }) => {
 
    useEffect(() => {
       if (match == null || homeTeam != null || awayTeam != null) return;
-
+      console.log(match.league);
       const homeTeamURL = `http://localhost:3000/api/teams/${match.homeTeam.team}`;
       makeRequest(homeTeamURL, setHomeTeam, setLoading);
       const awayTeamURL = `http://localhost:3000/api/teams/${match.awayTeam.team}`;
       makeRequest(awayTeamURL, setAwayTeam, setLoading);
-
-      setLeague(getLeague(match.league));
+      let league = getLeague(match.league);
+      console.log(league);
+      setLeague(league);
    }, [match]);
 
    return (
@@ -114,14 +115,6 @@ const styles = StyleSheet.create({
       justifyContent: "center",
       alignItems: "center",
    },
-   row: {
-      display: "flex",
-      flexDirection: "row",
-      justifyContent: "space-evenly",
-      alignItems: "center",
-      marginBottom: 35,
-      borderBottomWidth: 1,
-   },
    col: {
       width: "50%",
       paddingHorizontal: 10,
@@ -146,5 +139,6 @@ const styles = StyleSheet.create({
       borderWidth: 1,
       borderRadius: 10,
       paddingVertical: 15,
+      width: "100%",
    },
 });

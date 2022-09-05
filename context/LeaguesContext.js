@@ -1,4 +1,10 @@
-import { createContext, useContext, useState, useCallback } from "react";
+import {
+   createContext,
+   useContext,
+   useState,
+   useCallback,
+   useEffect,
+} from "react";
 import axios from "axios";
 import * as SecureStore from "expo-secure-store";
 
@@ -16,7 +22,7 @@ function LeaguesProvider({ children }) {
    const [error, setError] = useState(null);
 
    // fetch list of leagues
-   const fetchLeagues = useCallback(() => {
+   useEffect(() => {
       // return nothing if the leagues have been fetched already
       if (leagues != null) return;
 
@@ -33,6 +39,7 @@ function LeaguesProvider({ children }) {
                setLeagues(response.data);
             })
             .catch(error => {
+               console.log(error);
                setError(error);
             });
       });
@@ -41,6 +48,7 @@ function LeaguesProvider({ children }) {
    // get a league by id
    const getLeague = useCallback(
       id => {
+         console.log(leagues);
          // return nothing if the leagues have been fetched already
          if (leagues == null) return;
 
@@ -51,9 +59,7 @@ function LeaguesProvider({ children }) {
    );
 
    return (
-      <LeaguesContext.Provider
-         value={{ leagues, error, fetchLeagues, getLeague }}
-      >
+      <LeaguesContext.Provider value={{ leagues, error, getLeague }}>
          {children}
       </LeaguesContext.Provider>
    );
