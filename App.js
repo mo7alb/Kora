@@ -7,6 +7,8 @@ import Matches from "./screens/Matches";
 import Register from "./screens/Register";
 import MatchDetails from "./screens/MatchDetails";
 import TeamDetails from "./screens/TeamDetails";
+import LeagueDetails from "./screens/LeagueDetails";
+import PlayerDetails from "./screens/PlayerDetails";
 
 // import navigation related
 import { NavigationContainer } from "@react-navigation/native";
@@ -106,6 +108,8 @@ const AppNavigationStack = () => {
             <Stack.Screen name="Register" component={Register} />
             <Stack.Screen name="MatchDetails" component={MatchDetails} />
             <Stack.Screen name="TeamDetails" component={TeamDetails} />
+            <Stack.Screen name="LeagueDetails" component={LeagueDetails} />
+            <Stack.Screen name="PlayerDetails" component={PlayerDetails} />
          </Stack.Navigator>
       </NavigationContainer>
    );

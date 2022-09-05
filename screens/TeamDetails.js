@@ -1,34 +1,8 @@
-import {
-   StyleSheet,
-   Text,
-   View,
-   SafeAreaView,
-   TouchableOpacity,
-   ScrollView,
-} from "react-native";
-import { useLeaguesContext } from "../context/LeaguesContext";
+import { StyleSheet, Text, View, SafeAreaView, ScrollView } from "react-native";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-
-/** functional component to display a single league */
-const TouchableLeague = ({ league_id }) => {
-   const { getLeague } = useLeaguesContext();
-   const [league, setLeague] = useState(null);
-   useEffect(() => setLeague(getLeague(league_id)), []);
-   return (
-      <TouchableOpacity style={styles.clickable}>
-         <Text style={{ textAlign: "center" }}>{league && league.title}</Text>
-      </TouchableOpacity>
-   );
-};
-
-const TouchablePlayer = ({ player }) => {
-   return (
-      <TouchableOpacity style={styles.clickable}>
-         <Text style={{ textAlign: "center" }}>{player.name}</Text>
-      </TouchableOpacity>
-   );
-};
+import { TouchablePlayer } from "../components/TouchablePlayer";
+import { TouchableLeague } from "../components/TouchableLeague";
 
 /**
  * Functional component to display details of a team
@@ -63,6 +37,7 @@ const TeamDetails = ({ route, navigation }) => {
                   <TouchableLeague
                      key={league.league}
                      league_id={league.league}
+                     navigation={navigation}
                   />
                ))}
             </View>
@@ -75,7 +50,11 @@ const TeamDetails = ({ route, navigation }) => {
                <View style={styles.playersContainer}>
                   {players &&
                      players.map(player => (
-                        <TouchablePlayer key={player._id} player={player} />
+                        <TouchablePlayer
+                           key={player._id}
+                           player={player}
+                           navigation={navigation}
+                        />
                      ))}
                </View>
             )}
@@ -86,7 +65,7 @@ const TeamDetails = ({ route, navigation }) => {
 
 export default TeamDetails;
 
-const styles = StyleSheet.create({
+export const styles = StyleSheet.create({
    container: {
       width: "100%",
       height: "100%",
@@ -118,12 +97,5 @@ const styles = StyleSheet.create({
       fontSize: 18,
       marginBottom: 10,
       textAlign: "center",
-   },
-   clickable: {
-      borderWidth: 1,
-      borderRadius: 10,
-      paddingVertical: 15,
-      width: "80%",
-      marginBottom: 20,
    },
 });
