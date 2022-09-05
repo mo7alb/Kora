@@ -31,7 +31,6 @@ const Team = ({ teamId, navigation }) => {
             headers: { authorization: `token ${token}` },
          })
          .then(response => Alert.alert("Started following the team"))
-         //Alert.alert("An error occurred")
          .catch(error => {
             if (error.message == "Request failed with status code 400") {
                Alert.alert("Already following Team");

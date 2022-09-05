@@ -1,11 +1,19 @@
 import { useEffect, useState, useCallback } from "react";
-import { SafeAreaView, View, Text, StyleSheet, Alert } from "react-native";
+import {
+   SafeAreaView,
+   View,
+   Text,
+   StyleSheet,
+   Alert,
+   ScrollView,
+} from "react-native";
 import { useProfileContext } from "../context/profileContext";
 import Logo from "../components/Logo";
 import Constants from "expo-constants";
 import axios from "axios";
 import * as SecureStore from "expo-secure-store";
 import NotAuthenticated from "../components/NotAuthenticated";
+import CustomButton from "../components/CustomButton";
 
 const makeRequest = async (url, setter) => {
    const token = await SecureStore.getItemAsync("token");
@@ -26,6 +34,7 @@ const makeRequest = async (url, setter) => {
 const Profile = ({ navigation }) => {
    const [leagues, setLeagues] = useState(null);
    const [teams, setTeams] = useState(null);
+   const [changes, setChanges] = useState(false);
 
    const { profile } = useProfileContext();
 
@@ -40,21 +49,64 @@ const Profile = ({ navigation }) => {
 
       const teams_url = "http://localhost:3000/api/teams/favorite-teams";
       makeRequest(teams_url, setTeams);
-   }, []);
+      setChanges(false);
+   }, [changes]);
+
+   const removeFavoriteTeam = async team_id => {
+      const url = `http://localhost:3000/api/teams/remove-favorite-team`;
+      const token = await SecureStore.getItemAsync("token");
+
+      axios
+         .post(
+            url,
+            { team_id: team_id },
+            {
+               headers: { authorization: `token ${token}` },
+            }
+         )
+         .then(response => {
+            setChanges(true);
+            Alert.alert("Removed favorite team");
+         })
+         .catch(error => Alert.alert("An error occurred, Try again later"));
+   };
 
    return (
       <SafeAreaView style={styles.wrapper}>
          <Logo />
          {profile != null && (
             <View style={styles.componentWrapper}>
-               <View style={styles.section}>
-                  <Text>Favorite Leagues</Text>
-                  <Text>{JSON.stringify(leagues)}</Text>
-               </View>
-               <View style={styles.section}>
-                  <Text>Favorite Teams</Text>
-                  <Text>{JSON.stringify(teams)}</Text>
-               </View>
+               <ScrollView style={{ height: "100%" }}>
+                  <View style={styles.section}>
+                     <Text style={styles.sectionTitle}>Favorite Leagues</Text>
+                     {leagues && leagues.length == 0 && (
+                        <Text>No favorite leagues, try adding some</Text>
+                     )}
+                     {leagues &&
+                        leagues.map(league => (
+                           <View style={{ borderBottomWidth: 1 }}>
+                              <Text style={styles.title}>{league.title}</Text>
+                           </View>
+                        ))}
+                     <Text style={styles.sectionTitle}>Favorite Teams</Text>
+                     {teams && teams.length == 0 && (
+                        <Text>No favorite Teams, try adding some</Text>
+                     )}
+                     {teams &&
+                        teams.map(team => (
+                           <View>
+                              <Text style={styles.title}>{team.title}</Text>
+                              <CustomButton
+                                 content="Remove Team"
+                                 size="lg"
+                                 style="dark"
+                                 additionalStyles={styles.btn}
+                                 pressEvent={() => removeFavoriteTeam(team._id)}
+                              />
+                           </View>
+                        ))}
+                  </View>
+               </ScrollView>
             </View>
          )}
          {profile == null && (
@@ -81,7 +133,21 @@ const styles = StyleSheet.create({
       alignItems: "center",
    },
    section: {
-      height: "50%",
+      height: "100%",
       width: "100%",
+   },
+   sectionTitle: {
+      fontSize: 25,
+      fontWeight: "600",
+      textAlign: "center",
+      marginVertical: 35,
+   },
+   title: {
+      fontSize: 22,
+      fontWeight: "600",
+      textAlign: "center",
+   },
+   btn: {
+      marginVertical: 20,
    },
 });

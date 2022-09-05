@@ -39,13 +39,11 @@ const LeagueDetails = ({ route, navigation }) => {
             headers: { authorization: `token ${token}` },
          })
          .then(response => Alert.alert("Started following the League"))
-         //Alert.alert("An error occurred")
          .catch(error => {
             if (error.message == "Request failed with status code 400") {
                Alert.alert("Already following league");
                return;
             }
-
             Alert.alert("An error occurred, Try again later");
          });
    };
